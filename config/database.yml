@@ -1,0 +1,22 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: <%= ENV.fetch("PGUSER") { "postgres" } %>
+  password: <%= ENV.fetch("PGPASSWORD") { "postgres" } %>
+  host: <%= ENV.fetch("PGHOST") { "localhost" } %>
+  port: <%= ENV.fetch("PGPORT") { 5432 } %>
+
+development:
+  <<: *default
+  database: mumbai_customers_filter_api_development
+
+test:
+  <<: *default
+  database: mumbai_customers_filter_api_test
+
+production:
+  <<: *default
+  database: mumbai_customers_filter_api_production
+  username: <%= ENV["MUMBAI_CUSTOMERS_FILTER_API_DATABASE_USER"] || "postgres" %>
+  password: <%= ENV["MUMBAI_CUSTOMERS_FILTER_API_DATABASE_PASSWORD"] || "postgres" %>
