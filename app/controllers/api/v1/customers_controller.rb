@@ -6,7 +6,7 @@ module Api
     class CustomersController < ApplicationController
       def invite
         file = params[:file]
-        return render json: { error: 'File missing' }, status: :bad_request unless file
+        return render json: { error: 'File missing' }, status: :bad_request if file.blank? || !file.respond_to?(:path)
 
         customers = CustomerFilter.new(file.path).call
         render json: customers, status: :ok

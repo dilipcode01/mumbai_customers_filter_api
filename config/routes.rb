@@ -15,4 +15,7 @@ Rails.application.routes.draw do
       post 'customers/invite', to: 'customers#invite'
     end
   end
+
+  mount Rswag::Api::Engine => '/api-docs'
+  mount Rswag::Ui::Engine => '/api-docs'
 end

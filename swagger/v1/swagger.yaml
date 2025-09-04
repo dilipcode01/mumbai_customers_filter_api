@@ -1,0 +1,31 @@
+---
+openapi: 3.0.1
+info:
+  title: Customers API
+  version: v1
+paths:
+  "/api/v1/customers/invite":
+    post:
+      summary: Upload customer file
+      tags:
+        - Customers
+      requestBody:
+        required: true
+        description: Customers file (JSON lines format)
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - file
+              properties:
+                file: 
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: filtered customers
+        "400":
+          description: file missing
+servers:
+  - url: http://localhost:3000

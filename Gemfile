@@ -42,9 +42,14 @@ group :development, :test do
   gem 'rubocop-rails', require: false  # Adds Rails-specific cops
   gem 'rspec-rails', '~> 7.0'
   gem 'byebug'
+  gem 'rswag-api'
+  gem 'rswag-ui'
+  gem 'rswag-specs'
 end
 
 group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
 end
+gem 'multi_json', '~> 1.15'
+gem 'uuidtools', '~> 2.2'
