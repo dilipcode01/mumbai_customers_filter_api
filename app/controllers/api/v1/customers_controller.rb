@@ -1,18 +1,22 @@
 # frozen_string_literal: true
 
-# app/controllers/api/v1/customers_controller.rb
 module Api
   module V1
     class CustomersController < ApplicationController
       def invite
-        file = params[:file]
-        return render json: { error: 'File missing' }, status: :bad_request if file.blank? || !file.respond_to?(:path)
+        file = customer_params[:file]
+        return render json: { error: 'File missing' }, status: :bad_request unless file.present?
 
-        customers = CustomerFilter.new(file.path).call
-        render json: customers, status: :ok
+        @customers = NearbyCustomersFinder.new(customer_params).call
       rescue StandardError => e
         Rails.logger.error "Invite processing failed: #{e.message}"
         render json: { error: 'Internal server error' }, status: :internal_server_error
+      end
+
+      private
+
+      def customer_params
+        params.permit(:file, :lat, :lon, :max_distance_km)
       end
     end
   end

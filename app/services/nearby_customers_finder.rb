@@ -3,12 +3,15 @@
 
 require 'json'
 
-class CustomerFilter
-  MUMBAI_COORDINATES = { lat: 19.0590317, lon: 72.7553452 }.freeze
+class NearbyCustomersFinder
+  DEFAULT_COORDINATES = { lat: 19.0590317, lon: 72.7553452 }.freeze
+  DEFAULT_MAX_DISTANCE = 100
 
-  def initialize(file_path, max_distance_km = 100)
-    @file_path = file_path
-    @max_distance_km = max_distance_km
+  def initialize(params)
+    @file_path = params[:file]&.path
+    @lat = params[:lat].presence&.to_f || DEFAULT_COORDINATES[:lat]
+    @lon = params[:lon].presence&.to_f || DEFAULT_COORDINATES[:lon]
+    @max_distance_km = params[:max_distance_km].presence&.to_f || DEFAULT_MAX_DISTANCE
   end
 
   def call
@@ -19,13 +22,13 @@ class CustomerFilter
       next unless valid_customer?(customer)
 
       distance = DistanceCalculator.new(
-        MUMBAI_COORDINATES[:lat],
-        MUMBAI_COORDINATES[:lon],
+        @lat,
+        @lon,
         customer[:latitude],
         customer[:longitude]
       ).call
 
-      filtered_customers << { user_id: customer[:user_id], name: customer[:name] } if distance <= @max_distance_km
+      filtered_customers << customer if distance <= @max_distance_km
     rescue JSON::ParserError
       Rails.logger.warn "Skipping invalid JSON line: #{line.strip}"
       next

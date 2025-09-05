@@ -53,3 +53,4 @@ group :development do
 end
 gem 'multi_json', '~> 1.15'
 gem 'uuidtools', '~> 2.2'
+gem "jbuilder"

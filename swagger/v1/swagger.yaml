@@ -1,4 +1,3 @@
----
 openapi: 3.0.1
 info:
   title: Customers API
@@ -6,12 +5,11 @@ info:
 paths:
   "/api/v1/customers/invite":
     post:
-      summary: Upload customer file
+      summary: Filter customers from a file
       tags:
         - Customers
       requestBody:
         required: true
-        description: Customers file (JSON lines format)
         content:
           multipart/form-data:
             schema:
@@ -19,13 +17,27 @@ paths:
               required:
                 - file
               properties:
-                file: 
+                file:
                   type: string
                   format: binary
+                lat:
+                  type: number
+                  format: float
+                  description: Optional latitude, defaults to 19.0590317
+                lon:
+                  type: number
+                  format: float
+                  description: Optional longitude, defaults to 72.7553452
+                distance:
+                  type: number
+                  format: float
+                  description: Optional max distance in km, defaults to 100
       responses:
         "200":
-          description: filtered customers
+          description: customers filtered successfully
         "400":
           description: file missing
+        "500":
+          description: internal server error
 servers:
   - url: http://localhost:3000

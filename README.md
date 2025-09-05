@@ -4,21 +4,6 @@ A **Ruby on Rails API** to filter customers within a certain radius (default 100
 
 ---
 
-## 📝 Table of Contents
-
-- [Features](#features)  
-- [Tech Stack](#tech-stack)  
-- [Installation](#installation)  
-- [Usage](#usage)  
-  - [API Endpoint](#api-endpoint)  
-  - [File Format](#file-format)  
-- [Testing](#testing)  
-- [Swagger Documentation](#swagger-documentation)  
-- [Project Structure](#project-structure)  
-- [License](#license)  
-
----
-
 ## ✨ Features
 
 - Upload a **JSONL (JSON lines)** file of customers.  
@@ -46,7 +31,9 @@ A **Ruby on Rails API** to filter customers within a certain radius (default 100
 1. Clone the repository:
 
 git clone git@github.com:dilipcode01/mumbai_customers_filter_api.git
-cd mumbai_customers_filter_api
+- cd mumbai_customers_filter_api
+- bundle install
+- rails db:create
 
 ---
 
@@ -97,9 +84,3 @@ cd mumbai_customers_filter_api
 - `app/controllers/` – API controllers
 - `spec/` – RSpec tests
 - `docs/` – Swagger/OpenAPI specs
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License.
